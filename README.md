@@ -8,3 +8,6 @@ https://www.youtube.com/watch?v=lvmNLuHj25o
 
 AND TechToTinker
 https://techtotinker.blogspot.com/2020/11/016-esp32-micropython-web-server-esp32.html?m=1
+
+AND an older project that did a similar task:
+https://github.com/tayfunulu/WiFiManager
