@@ -2,8 +2,9 @@
 # open the simple text file and copy the ssid and password from it
 # the wifi.txt file only contains two lines of text, the first is the wifi ssid, the 2nd is the password
 # ---------------------------------------------------------------------------------------------------- #
+filepath = 'wifi.txt'
+
 def GetCurrentCreds():
-    filepath = 'wifi.txt'
     with open(filepath, 'r') as fp:
         ssid1 = fp.readline().rstrip("\n").rstrip()
         password1 = fp.readline().rstrip("\n").rstrip()
@@ -17,7 +18,6 @@ def GetCurrentCreds():
 def connect():
     import network
     import time
-
     ssid1,password1 = GetCurrentCreds()
     print("Current ssid =", ssid1)
     print("Current password =", password1)
@@ -30,7 +30,6 @@ def connect():
         print("Already connected")
         return
  
-    station.active(True)
     station.connect(ssid1, password1)
     time.sleep(5)
 
@@ -41,8 +40,9 @@ def connect():
     # user to enter new credentials.
     if state1 == False:
         station.disconnect()
+        ssids = sorted(ssid.decode('utf-8') for ssid, *_ in station.scan()) #get a list of nearby SSIDs
         import apmode
-        ssid1,password1 = apmode.setupAP(ssid1,password1)
+        ssid1,password1 = apmode.setupAP(ssids, station) #setup an AP and use the ssids we just found to populate our html form
         print("New ssid is ", ssid1)
         print("New password is ", password1)
         with open(filepath, 'w') as wf:
